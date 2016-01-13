@@ -5,17 +5,18 @@ var app = angular.module('FarmApp', []);
 app.controller('DataController', function ($scope) {
     
     //Initialize The Scope Variables
-    $scope.OpenTickets = [];
     $scope.Mode = "home";
     $scope.Ticket = [];
     $scope.selectedOpenTicket = [];
-    $scope.selectedCommodity = [];
     loadData();
-   
-    
-    
-    
+      
     //Button Click Methods For Pages
+    
+    $scope.cancelClick = function () {
+        $scope.Ticket = [];
+        $scope.selectedOpenTicket = [];
+        $scope.Mode = "home";
+    };
     
 
     $scope.newTicketClick = function () {
@@ -23,26 +24,32 @@ app.controller('DataController', function ($scope) {
         $scope.Mode = "inbound";
     };
 
-    $scope.inboundClick = function () {
-        $scope.Ticket.InWeight = Math.floor((Math.random() * 10000) + 1);
-        $scope.Mode = "confirminbound";
+    $scope.inboundClick = function (isValid) {
+        if(isValid)
+        {
+            $scope.Ticket.InWeight = Math.floor((Math.random() * 10000) + 1);
+            $scope.Mode = "confirminbound";
+        }
     };
 
-    $scope.outboundClick = function () {
+    $scope.outboundClick = function (isValid) {
 
-        $scope.Ticket.OutWeight = Math.floor((Math.random() * 10000) + 1);
+        if(isValid)
+        {
+            $scope.Ticket.OutWeight = Math.floor((Math.random() * 10000) + 1);
 
-        if ($scope.Ticket.InWeight > $scope.Ticket.OutWeight) {
-            $scope.Ticket.Gross = $scope.Ticket.InWeight;
-            $scope.Ticket.Tare = $scope.Ticket.OutWeight;
+            if ($scope.Ticket.InWeight > $scope.Ticket.OutWeight) {
+                $scope.Ticket.Gross = $scope.Ticket.InWeight;
+                $scope.Ticket.Tare = $scope.Ticket.OutWeight;
         }
-        else {
-            $scope.Ticket.Gross = $scope.Ticket.OutWeight;
-            $scope.Ticket.Tare = $scope.Ticket.InWeight;
-        }
-        $scope.Ticket.Net = $scope.Ticket.Gross - $scope.Ticket.Tare;
+            else {
+                $scope.Ticket.Gross = $scope.Ticket.OutWeight;
+                $scope.Ticket.Tare = $scope.Ticket.InWeight;
+            }
+            $scope.Ticket.Net = $scope.Ticket.Gross - $scope.Ticket.Tare;
 
-        $scope.Mode = "confirmoutbound";
+            $scope.Mode = "confirmoutbound";
+        }
     };
 
     $scope.saveInboundClick = function () {
@@ -66,6 +73,8 @@ app.controller('DataController', function ($scope) {
 
     //ideally there would be a service call to handle this. 
     function loadData() {
+        
+        $scope.OpenTickets = [];
 
         $scope.Commodities = [{ "Name": "Corn", "BushelWeight": 56.00000, "StandardMoisture": 15.00000, "IsActive": true, "Oid": "5dea752f-a7d9-4e1a-a1f4-6a115bb5239a" }, { "Name": "WHEAT", "BushelWeight": 5.00000, "StandardMoisture": 5.00000, "IsActive": true, "Oid": "ebbb7330-cd0f-436d-8ac2-60e9d35898d8" }, { "Name": "SOY BEANS", "BushelWeight": 2.00000, "StandardMoisture": 8.00000, "IsActive": true, "Oid": "ac81cbaf-d86f-43c3-860e-4797b395c701" }];
 
