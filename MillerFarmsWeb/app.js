@@ -16,6 +16,7 @@ app.controller('DataController', function ($scope) {
     $scope.Mode = "home";
     $scope.Ticket = [];
     $scope.selectedOpenTicket = [];
+    $scope.Commodities = [];
     loadData();
       
     //Button Click Methods For Pages
@@ -89,8 +90,7 @@ app.controller('DataController', function ($scope) {
     Database.GetData("TruckIO.sdf", "SELECT * FROM [Commodity]",
 		function(result) 
 		{	
-            $scope.Commodities = result;
-            alert($scope.Commodities);
+            $scope.Commodities = JSON.parse(result);
 		},
 		function(msg) { alert(msg.getErrorMessage()); }
 		);
@@ -98,7 +98,7 @@ app.controller('DataController', function ($scope) {
     Database.GetData("TruckIO.sdf", "SELECT * FROM [Farm]",
 		function(result) 
 		{	
-            $scope.Farms = result;
+            $scope.Farms = JSON.parse(result);
 		},
 		function(msg) { alert(msg.getErrorMessage()); }
 		);
@@ -106,7 +106,7 @@ app.controller('DataController', function ($scope) {
     Database.GetData("TruckIO.sdf", "SELECT * FROM [Field]",
 		function(result) 
 		{	
-            $scope.Fields = result;
+            $scope.Fields = JSON.parse(result);
 		},
 		function(msg) { alert(msg.getErrorMessage()); }
 		);
@@ -114,7 +114,7 @@ app.controller('DataController', function ($scope) {
     Database.GetData("TruckIO.sdf", "SELECT * FROM [Truck]",
 		function(result) 
 		{	
-            $scope.Trucks = result;
+            $scope.Trucks = JSON.parse(result);
 		},
 		function(msg) { alert(msg.getErrorMessage()); }
 		);
@@ -122,7 +122,7 @@ app.controller('DataController', function ($scope) {
     Database.GetData("TruckIO.sdf", "SELECT * FROM [Ticket] WHERE Completed = 0",
 		function(result) 
 		{	
-            $scope.OpenTickets = result;
+            $scope.OpenTickets = JSON.parse(result);
 		},
 		function(msg) { alert(msg.getErrorMessage()); }
 		);
