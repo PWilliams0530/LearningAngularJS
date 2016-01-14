@@ -1,13 +1,17 @@
-body{
-    padding: 20px;
+select {
+    padding: 15px 0 15px 10px;
 }
 
-.form-group label{
-    text-align: right;
-    margin-right: 20px;
-    width: 100px;
+.form-group label {
+    font-size: 75%;
+    float: left;
+    margin:0;
+    transform: translate(100%,-100%);
+    width: initial;
+    width:0;
 }
 
-.form-group span{
-    
+.form-group {
+    clear: both;
+    padding-top: 20px;
 }
