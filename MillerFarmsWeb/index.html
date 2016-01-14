@@ -12,6 +12,7 @@
         <script src="Scripts/angular.js"></script>
         <script src="Scripts/jquery-1.9.1.js"></script>
         <script src="Scripts/bootstrap.js"></script>
+        <script src="Scripts/ui.js"></script>
         <script src="app.js"></script>
     </head>
     <body ng-controller="DataController as Data" ng-init="init()">
@@ -91,21 +92,15 @@
                 
                 
         <div id="ConfirmInbound" ng-show="Mode == 'confirminbound'">
-            <div class="form-group">
-                <label>Truck ID:</label><label>{{Ticket.Truck.Name}}</label>
-            </div>
-            <div class="form-group">
-                <label>Commodity:</label><label>{{Ticket.Commodity.Name}}</label>
-            </div>
-            <div class="form-group">
-                <label>Field:</label><label>{{Ticket.Field.Name}}</label>
-            </div>
-            <div class="form-group">
-                <label>Farm:</label><label>{{Ticket.Farm.Name}}</label>
-            </div>
-            <div class="form-group">
-                <label>In Weight:</label><label>{{Ticket.InWeight}}</label>
-            </div>
+			<!-- UPDATED MARKUP BY AS 1-14-15.  CLASSES AND IDs CAN BE ADDED AS NEEDED-->
+			<ul>
+			  <li><strong>Truck ID:</strong>{{Ticket.Truck.Name}}</li>
+			  <li><strong>Commodity:</strong>{{Ticket.Commodity.Name}}</li>
+			  <li><strong>Field:</strong>{{Ticket.Field.Name}}</li>
+			  <li><strong>Farm:</strong>{{Ticket.Farm.Name}}</li>
+			  <li><strong>In Weight:</strong>{{Ticket.InWeight}}</li>
+			</ul>
+			<!-- END UPDATE -->
             <div class="form-group">
                 <input type="button" class="btn btn-primary" value="Save Inbound" name="SaveInbound" ng-click= "saveInboundClick()">
                 <input type="button" class="btn btn-danger" value="Cancel" name="Cancel" ng-click="cancelClick()">
@@ -113,33 +108,19 @@
         </div>
                 
         <div id="ConfirmOutbound" ng-show="Mode == 'confirmoutbound'">
-            <div class="form-group">
-                <label>Truck ID:</label><label>{{Ticket.Truck.Name}}</label>
-            </div>
-            <div class="form-group">
-                <label>Commodity:</label><label>{{Ticket.Commodity.Name}}</label>
-            </div>
-            <div class="form-group">
-                <label>Field:</label><label>{{Ticket.Field.Name}}</label>
-            </div>
-            <div class="form-group">
-                <label>Farm:</label><label>{{Ticket.Farm.Name}}</label>
-            </div>
-            <div class="form-group">
-                <label>Moisture:</label><label>{{Ticket.Moisture}}</label>
-            </div>
-            <div class="form-group">
-                <label>TestWeight:</label><label>{{Ticket.TestWeight}}</label>  
-            </div>
-            <div class="form-group">
-                <label>Gross:</label><label>{{Ticket.Gross}}</label>
-            </div>
-            <div class="form-group">
-                <label>Tare:</label><label>{{Ticket.Tare}}</label>
-            </div>
-            <div class="form-group">
-                <label>Net:</label><label>{{Ticket.Net}}</label>
-            </div>
+			<!-- UPDATED MARKUP BY AS 1-14-15.  CLASSES AND IDs CAN BE ADDED AS NEEDED-->
+            <ul>
+				<li><strong>Truck ID:</strong>{{Ticket.Truck.Name}}</li>
+				<li><strong>Commodity:</strong>{{Ticket.Commodity.Name}}</li>
+				<li><strong>Field:</strong>{{Ticket.Field.Name}}</li>
+				<li><strong>Farm:</strong>{{Ticket.Farm.Name}}</li>
+				<li><strong>Moisture:</strong>{{Ticket.Moisture}}</li>
+				<li><strong>TestWeight:</strong>{{Ticket.TestWeight}}</li>
+				<li><strong>Gross:</strong>{{Ticket.Gross}}</li>
+				<li><strong>Tare:</strong>{{Ticket.Tare}}</li>
+				<li><strong>Net:</strong>{{Ticket.Net}}</li>
+			</ul>
+			<!-- END UPDATE -->
             <div class="form-group">
                 <input type="button" class="btn btn-primary" value="Save Outbound" name="SaveOutbound" ng-click= "saveOutboundClick()">
                 <input type="button" class="btn btn-danger" value="Cancel" name="Cancel" ng-click="cancelClick()">
