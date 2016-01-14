@@ -84,13 +84,13 @@ app.controller('DataController', function ($scope) {
         
         Channel = new RemObjects.SDK.HTTPClientChannel("http://192.168.34.164:8095/JSON");
         Message = new RemObjects.SDK.JSONMessage();
-        Scales = new ScaleService(Channel, Message);
         Database = new DatabaseService(Channel, Message);
        
     Database.GetData("TruckIO.sdf", "SELECT * FROM [Commodity]",
 		function(result) 
 		{	
             $scope.Commodities = result;
+            alert($scope.Commodities);
 		},
 		function(msg) { alert(msg.getErrorMessage()); }
 		);
