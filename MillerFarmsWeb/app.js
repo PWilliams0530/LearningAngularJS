@@ -145,7 +145,6 @@ app.controller('DataController', function ($scope) {
           var str = "{0} {1}";
             Scales.GetGross("A", function(result) { gross = result; }, function(msg) { gross = -1; });
             $scope.CurrentWeight = gross;
-            alert($scope.CurrentWeight);
         } catch (e) {
           alert(e);
         }  
