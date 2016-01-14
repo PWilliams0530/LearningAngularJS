@@ -10,6 +10,7 @@ app.controller('DataController', function ($scope) {
     var Scales;
     var Settings;
     var Database;
+    var gross = 0;
     
     
     //Initialize The Scope Variables
@@ -37,7 +38,6 @@ app.controller('DataController', function ($scope) {
     $scope.inboundClick = function (isValid) {
         if(isValid)
         {
-            $scope.GetGrossWeight();
             $scope.Ticket.InWeight = $scope.CurrentWeight;
             $scope.Mode = "confirminbound";
         }
@@ -47,7 +47,6 @@ app.controller('DataController', function ($scope) {
 
         if(isValid)
         {
-            $scope.GetGrossWeight();
             $scope.Ticket.OutWeight = $scope.CurrentWeight;
 
             if ($scope.Ticket.InWeight > $scope.Ticket.OutWeight) {
@@ -134,5 +133,21 @@ app.controller('DataController', function ($scope) {
 		},
 		function(msg) { alert(msg.getErrorMessage()); }
 		);
+        
+    setInterval(UpdateWeight, 1000);
+        
     }
+    
+    function UpdateWeight()
+      {
+        try
+        {
+          var str = "{0} {1}";
+            Scales.GetGross("A", function(result) { gross = result; }, function(msg) { gross = -1; });
+            $scope.CurrentWeight = gross;
+            alert($scope.CurrentWeight);
+        } catch (e) {
+          alert(e);
+        }  
+      }
 });
