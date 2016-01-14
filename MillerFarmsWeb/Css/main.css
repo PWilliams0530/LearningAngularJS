@@ -1,17 +1,79 @@
-select {
+/*--- COLORS ---*/
+/*
+Primary: #B1BF4A
+Secondary: #971A1D
+Tertiary: #FDC011
+*/
+
+.form-group select {
     padding: 15px 0 15px 10px;
+	width: 90%;
+    margin-left: 2.5%;
 }
 
 .form-group label {
     font-size: 75%;
+    margin: 0;
+    width: 0;
+    position: relative;
+    top: -17px;
+    left: 20px;
     float: left;
-    margin:0;
-    transform: translate(100%,-100%);
-    width: initial;
-    width:0;
 }
 
 .form-group {
     clear: both;
     padding-top: 20px;
+    float: left;
+    width: 50%;
+    clear: none;
+}
+
+form, .confirm {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    max-height: 90%;
+	min-width:400px;
+	min-height:200px;
+}
+
+.full-width .btn{
+    width: 48%;
+    float: left;
+}
+
+.full-width .btn:first-child{
+	margin-right:1%;
+}
+
+.full-width .btn:last-child{
+	margin-left:1%;
+}
+
+.full-width{
+    width:100%;
+}
+
+.confirm ul {
+    width: 100%;
+    list-style-type: none;
+    padding-left: 0;
+    border:1px solid #ccc;
+}
+
+.confirm ul li {
+    background: #eee;
+    padding: 10px;
+
+}
+
+.confirm ul li:not(:last-child){
+    border-bottom:1px solid #ccc;
+}
+
+.confirm ul li:nth-of-type(odd){
+    background:#ddd;
 }
