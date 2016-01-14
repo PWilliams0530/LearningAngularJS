@@ -20,32 +20,25 @@
     <body ng-controller="DataController as Data" ng-init="init()">
               
         <div id="Home" ng-show= "Mode == 'home' || Mode == 'outbound'">          
-            <div class="form-group" >
+			<div class="form-group full-width" >
                 <select ng-options="ticket.Truck.Name for ticket in OpenTickets" ng-model="selectedOpenTicket"
                     ng-change="LoadTicket()">
                     <option value="" disabled>Select Open Ticket</option>
                 </select>
-            </div>         
-            <div class="form-group" >        
-                <input type="button" class="btn-primary" value="New Ticket" name="NewTicket" ng-click="newTicketClick()">
-            </div>          
+            </div>
+            <div class="form-group full-width" >        
+                <input type="button" class="btn btn-primary full-width" value="New Ticket" name="NewTicket" ng-click="newTicketClick()">
+            </div>
         </div>
         
         <div id="Outbound" ng-show="Mode == 'outbound'">
         <form name="outboundForm" ng-submit="outboundClick(outboundForm.$valid)" novalidate>
-            <hr>
-            <div class="form-group">
-                <label>Truck ID:</label><label>{{Ticket.Truck.Name}}</label>
-            </div>
-            <div class="form-group">
-                <label>Commodity:</label><label>{{Ticket.Commodity.Name}}</label>
-            </div>
-            <div class="form-group">
-                <label>Field:</label><label>{{Ticket.Field.Name}}</label>
-            </div>
-            <div class="form-group">
-                <label>Farm:</label><label>{{Ticket.Farm.Name}}</label>
-            </div>
+			<ul>
+			  <li><strong>Truck ID:</strong>{{Ticket.Truck.Name}}</li>
+			  <li><strong>Commodity:</strong>{{Ticket.Commodity.Name}}</li>
+			  <li><strong>Field:</strong>{{Ticket.Field.Name}}</li>
+			  <li><strong>Farm:</strong>{{Ticket.Farm.Name}}</li>
+			</ul>
             <div class="form-group">
                 <label>Moisture:</label><input type="text" name="input" ng-model="Ticket.Moisture" required>
             </div>
@@ -127,7 +120,7 @@
       
         <div id="ThankPage" ng-show="Mode == 'thanks'">
             <h3>Thanks For Testing Me</h3>
-            <input type="button" class="btn-primary" value="Continue" name="inputSubmit" ng-click= "thanksClick()">
+            <input type="button" class="btn btn-primary full-width" value="Continue" name="inputSubmit" ng-click= "thanksClick()">
         </div>
         
     </body>

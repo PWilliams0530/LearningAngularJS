@@ -1,14 +1,11 @@
 /*--- COLORS ---*/
-/*
-Primary: #B1BF4A
-Secondary: #971A1D
-Tertiary: #FDC011
-*/
 
-.form-group select {
+.form-group select,
+.form-group input[type="text"]{
     padding: 15px 0 15px 10px;
 	width: 90%;
     margin-left: 2.5%;
+	margin-bottom:20px;
 }
 
 .form-group label {
@@ -24,20 +21,24 @@ Tertiary: #FDC011
 .form-group {
     clear: both;
     padding-top: 20px;
-    float: left;
     width: 50%;
     clear: none;
 }
 
-form, .confirm {
+.form-group:nth-of-type(odd){
+	float: left;
+}
+
+.form-group:nth-of-type(even){
+	float: right;
+}
+
+form, .confirm, #Home, #ThankPage {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     max-width: 90%;
-    max-height: 90%;
-	min-width:400px;
-	min-height:200px;
 }
 
 .full-width .btn{
@@ -51,29 +52,116 @@ form, .confirm {
 
 .full-width .btn:last-child{
 	margin-left:1%;
+	float:right;
 }
 
 .full-width{
-    width:100%;
+    width:100%!important;
+
 }
 
-.confirm ul {
+ul {
     width: 100%;
     list-style-type: none;
     padding-left: 0;
     border:1px solid #ccc;
 }
 
-.confirm ul li {
+ul li {
     background: #eee;
     padding: 10px;
 
 }
 
-.confirm ul li:not(:last-child){
+ul li:not(:last-child){
     border-bottom:1px solid #ccc;
 }
 
-.confirm ul li:nth-of-type(odd){
+ul li:nth-of-type(odd){
     background:#ddd;
+}
+
+#Outbound form {
+	position:relative;
+	float:left;
+	top:initial;
+	transform: translate(-50%, 0);
+	clear:both;
+}
+
+#Home {
+	position:relative;
+	float:left;
+	transform:translate(-50%, 0);
+}
+
+
+/*---IPAD---*/
+@media (orientation: landscape) and (max-device-width: 1500px){
+	form, .confirm{
+		width:90%;
+		top:40%;
+	}
+	.full-width .btn{
+		padding:15px;
+	}
+}
+
+/*---IPHONE 6 AND SMALLER---*/
+@media (orientation: landscape) and (max-device-width: 670px){
+	form, .confirm{
+		top:50%;
+	}
+}
+
+/*---IPAD---*/
+@media (orientation: portrait) and (max-device-width: 775px){
+	form, .confirm{
+		width:90%;
+		top:40%;
+	}
+	
+	.full-width .btn{
+		padding:15px;
+	}
+	
+	.form-group{
+		width:100%;
+	}
+}
+
+/*---IPHONE 6 PLUS---*/
+@media (orientation: portrait) and (max-device-width: 600px){
+	form, .confirm {
+		position: absolute;
+		left: 50%;
+		top: 10px;
+		transform: translate(-50%, 0);
+		max-width: 90%;
+	}
+	.full-width .btn{
+		width: 100%;
+		float: none;
+	}
+
+	.full-width .btn:first-child{
+		margin-right:none;
+		margin-bottom:50px;
+	}
+
+	.full-width .btn:last-child{
+		margin-left:0px;
+		float:none;
+	}
+
+}
+
+/*---IPHONE 6 AND SMALLER---*/
+@media (orientation: portrait) and (max-device-width: 400px){
+	.full-width .btn:first-child{
+		margin-bottom:10px;
+	}
+	.form-group select {
+		margin-bottom:10px;
+	}
 }
