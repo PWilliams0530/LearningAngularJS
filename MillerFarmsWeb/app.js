@@ -14,6 +14,7 @@ app.controller('DataController', function ($scope) {
     
     //Initialize The Scope Variables
     $scope.Mode = "home";
+    $scope.CurrentWeight = 0.00;
     $scope.Ticket = [];
     $scope.selectedOpenTicket = [];
     $scope.Commodities = [];
@@ -36,7 +37,8 @@ app.controller('DataController', function ($scope) {
     $scope.inboundClick = function (isValid) {
         if(isValid)
         {
-            $scope.Ticket.InWeight = Math.floor((Math.random() * 10000) + 1);
+            $scope.GetGrossWeight();
+            $scope.Ticket.InWeight = $scope.CurrentWeight;
             $scope.Mode = "confirminbound";
         }
     };
@@ -45,7 +47,8 @@ app.controller('DataController', function ($scope) {
 
         if(isValid)
         {
-            $scope.Ticket.OutWeight = Math.floor((Math.random() * 10000) + 1);
+            $scope.GetGrossWeight();
+            $scope.Ticket.OutWeight = $scope.CurrentWeight;
 
             if ($scope.Ticket.InWeight > $scope.Ticket.OutWeight) {
                 $scope.Ticket.Gross = $scope.Ticket.InWeight;
@@ -79,6 +82,10 @@ app.controller('DataController', function ($scope) {
         $scope.Mode = "home";
         $scope.init();
     };
+    
+    $scope.GetGrossWeight = function(){
+        Scales.GetGross("A", function(result) { alert(result); $scope.CurrentWeight = result; }, function(msg) { gross = 0;});
+    }
 
     //ideally there would be a service call to handle this. 
     function loadData() {
@@ -86,6 +93,7 @@ app.controller('DataController', function ($scope) {
         Channel = new RemObjects.SDK.HTTPClientChannel("http://192.168.34.164:8095/JSON");
         Message = new RemObjects.SDK.JSONMessage();
         Database = new DatabaseService(Channel, Message);
+        Scales = new ScaleService(Channel, Message);
        
     Database.GetData("TruckIO.sdf", "SELECT * FROM [Commodity]",
 		function(result) 
