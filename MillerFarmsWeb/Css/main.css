@@ -8,6 +8,11 @@
 	margin-bottom:20px;
 }
 
+.form-group select[disabled = "true"]{
+	color:#aaa;
+	border-color:#aaa;
+}
+
 .form-group label {
     font-size: 75%;
     margin: 0;
