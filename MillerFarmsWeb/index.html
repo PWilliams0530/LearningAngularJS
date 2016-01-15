@@ -22,7 +22,7 @@
               
         <div id="Home" ng-show= "Mode == 'home' || Mode == 'outbound'">          
 			<div class="form-group full-width" >
-                <select ng-options="ticket.Truck.Name for ticket in OpenTickets" ng-model="selectedOpenTicket"
+                <select ng-options="ticket.Truck for ticket in OpenTickets" ng-model="selectedOpenTicket"
                     ng-change="LoadTicket()">
                     <option value="" disabled>Select Open Ticket</option>
                 </select>
@@ -35,10 +35,10 @@
         <div id="Outbound" ng-show="Mode == 'outbound'">
         <form name="outboundForm" ng-submit="outboundClick(outboundForm.$valid)" novalidate>
 			<ul>
-			  <li><strong>Truck ID:</strong>{{Ticket.Truck.Name}}</li>
-			  <li><strong>Commodity:</strong>{{Ticket.Commodity.Name}}</li>
-			  <li><strong>Field:</strong>{{Ticket.Field.Name}}</li>
-			  <li><strong>Farm:</strong>{{Ticket.Farm.Name}}</li>
+			  <li><strong>Truck ID:</strong>{{Ticket.Truck}}</li>
+			  <li><strong>Commodity:</strong>{{Ticket.Commodity}}</li>
+			  <li><strong>Field:</strong>{{Ticket.Field}}</li>
+			  <li><strong>Farm:</strong>{{Ticket.Farm}}</li>
 			</ul>
             <div class="form-group">
                 <label>Moisture:</label><input type="text" name="input" ng-model="Ticket.Moisture" required>
@@ -103,10 +103,10 @@
                 
         <div id="ConfirmOutbound" class="confirm" ng-show="Mode == 'confirmoutbound'">
             <ul>
-				<li><strong>Truck ID:</strong>{{Ticket.Truck.Name}}</li>
-				<li><strong>Commodity:</strong>{{Ticket.Commodity.Name}}</li>
-				<li><strong>Field:</strong>{{Ticket.Field.Name}}</li>
-				<li><strong>Farm:</strong>{{Ticket.Farm.Name}}</li>
+				<li><strong>Truck ID:</strong>{{Ticket.Truck}}</li>
+				<li><strong>Commodity:</strong>{{Ticket.Commodity}}</li>
+				<li><strong>Field:</strong>{{Ticket.Field}}</li>
+				<li><strong>Farm:</strong>{{Ticket.Farm}}</li>
 				<li><strong>Moisture:</strong>{{Ticket.Moisture}}</li>
 				<li><strong>TestWeight:</strong>{{Ticket.TestWeight}}</li>
 				<li><strong>Gross:</strong>{{Ticket.Gross}}</li>
