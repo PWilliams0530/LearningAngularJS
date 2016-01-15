@@ -93,7 +93,7 @@ app.controller('DataController', function ($scope) {
     };
     
     $scope.GetGrossWeight = function(){
-        Scales.GetGross("A", function(result) { alert(result); $scope.CurrentWeight = result; }, function(msg) { gross = 0;});
+        Scales.GetGross("A", function(result) {$scope.CurrentWeight = result; }, function(msg) { gross = 0;});
     }
     
     function loadOpenTickets() {
@@ -206,7 +206,7 @@ app.controller('DataController', function ($scope) {
 
           param.Name = "Outbound";
           param.DataType = "System.Double";
-          param.Value = $scope.Ticket.OutWeight;
+          param.Value = $scope.Ticket.OutWeight.toString();
 
           params.push(param);
 
@@ -300,7 +300,7 @@ app.controller('DataController', function ($scope) {
             
           param.Name = "Inbound";
           param.DataType = "System.Double";
-          param.Value = $scope.Ticket.InWeight;
+          param.Value = $scope.Ticket.InWeight.toString();
 
           params.push(param);
             

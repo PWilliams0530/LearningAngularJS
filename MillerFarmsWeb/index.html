@@ -93,7 +93,7 @@
 			  <li><strong>Commodity:</strong>{{Ticket.Commodity.Name}}</li>
 			  <li><strong>Field:</strong>{{Ticket.Field.Name}}</li>
 			  <li><strong>Farm:</strong>{{Ticket.Farm.Name}}</li>
-			  <li><strong>In Weight:</strong>{{CurrentWeight}}</li>
+			  <li><strong>In Weight:</strong>{{CurrentWeight}} lbs</li>
 			</ul>
             <div class="form-group full-width">
                 <input type="button" class="btn btn-primary" value="Save Inbound" name="SaveInbound" ng-click= "saveInboundClick()">
@@ -109,9 +109,9 @@
 				<li><strong>Farm:</strong>{{Ticket.Farm}}</li>
 				<li><strong>Moisture:</strong>{{Ticket.Moisture}}</li>
 				<li><strong>TestWeight:</strong>{{Ticket.TestWeight}}</li>
-				<li><strong>Gross:</strong>{{Ticket.Gross}}</li>
-				<li><strong>Tare:</strong>{{Ticket.Tare}}</li>
-				<li><strong>Net:</strong>{{Ticket.Net}}</li>
+				<li><strong>Gross:</strong>{{Ticket.Gross}} lbs</li>
+				<li><strong>Tare:</strong>{{Ticket.Tare}} lbs</li>
+				<li><strong>Net:</strong>{{Ticket.Net}} lbs</li>
 			</ul>
             <div class="form-group full-width">
                 <input type="button" class="btn btn-primary" value="Save Outbound" name="SaveOutbound" ng-click= "saveOutboundClick()">
@@ -120,7 +120,7 @@
         </div>     
       
         <div id="ThankPage" ng-show="Mode == 'thanks'">
-            <h3>Thanks For Testing Me</h3>
+            <h3>Ticket Saved</h3>
             <input type="button" class="btn btn-primary full-width" value="Continue" name="inputSubmit" ng-click= "thanksClick()">
         </div>
         
