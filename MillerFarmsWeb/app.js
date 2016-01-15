@@ -77,9 +77,9 @@ app.controller('DataController', function ($scope) {
 
     $scope.saveOutboundClick = function () {
         UpdateTicket();
-        $scope.OpenTickets = [];
-        $scope.Ticket = [];
         $scope.selectedOpenTicket = [];
+        loadOpenTickets();
+        $scope.Ticket = [];
         $scope.Mode = "thanks";
     };
 
@@ -89,7 +89,6 @@ app.controller('DataController', function ($scope) {
     }
 
     $scope.thanksClick = function () {
-        loadOpenTickets();
         $scope.Mode = "home";
     };
     
@@ -104,9 +103,9 @@ app.controller('DataController', function ($scope) {
             $scope.OpenTickets = JSON.parse(result);
 		},
 		function(msg) { alert(msg.getErrorMessage()); }
-		);
+		)
     }
-
+            
     //ideally there would be a service call to handle this. 
     function loadData() {
         
