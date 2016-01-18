@@ -15,13 +15,13 @@
         <script src="Scripts/angular.min.js"></script>
         <script src="Scripts/jquery-1.9.1.min.js"></script>
         <script src="Scripts/bootstrap.min.js"></script>
-        <script src="Scripts/ui.js"></script>
         <script src="app.js"></script>
+        <script src="Scripts/ui.js"></script>
     </head>
     <body ng-controller="DataController as Data" ng-init="init()">
               
         <div id="Home" ng-show= "Mode == 'home' || Mode == 'outbound'">          
-			<div class="form-group full-width" >
+			<div class="form-group form-heading" >
                 <select ng-options="ticket.Truck for ticket in OpenTickets" ng-model="selectedOpenTicket"
                     ng-change="LoadTicket()">
                     <option value="" disabled>Select Open Ticket</option>
