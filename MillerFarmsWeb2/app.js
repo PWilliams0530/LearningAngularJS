@@ -14,14 +14,10 @@ app.controller('DataController', function ($scope) {
     
     
     //Initialize The Scope Variables
+    loadData();
     $scope.Mode = "home";
     $scope.CurrentWeight = 0.00;
-    $scope.Ticket = [];
-    $scope.OpenTickets = [];
-    $scope.selectedOpenTicket = [];
-    $scope.Commodities = [];
-    $scope.Directions = ['Inbound','Outbound']
-    loadData();
+    $scope.Directions = ['Inbound','Outbound'];
       
     //Button Click Methods For Pages
     
@@ -35,18 +31,21 @@ app.controller('DataController', function ($scope) {
     $scope.newTicketClick = function () {
         $scope.Ticket = [];
         $scope.Mode = "inbound";
+        UpdateWeight();
     };
 
     $scope.inboundClick = function (isValid) {
         if(isValid)
         {
             $scope.Mode = "fields";
+            UpdateWeight();
         }
     };
     
     $scope.fieldformClick = function (isValid) {
         if(isValid)
         {
+            UpdateWeight();
             $scope.Ticket.InWeight = $scope.CurrentWeight;
             $scope.Ticket.Completed = false;
             $scope.Ticket.InDate = new Date().toLocaleDateString();
@@ -73,12 +72,14 @@ app.controller('DataController', function ($scope) {
                 $scope.Ticket.Splits = $scope.Ticket.Splits + "|" + $scope.Ticket.Splits3;
             }
           
+            
             $scope.Mode = "confirminbound";
         }
     };
 
     $scope.outboundClick = function (isValid) {
-
+        UpdateWeight();
+        
         if(isValid)
         {
             $scope.Ticket.OutWeight = $scope.CurrentWeight;
@@ -101,27 +102,26 @@ app.controller('DataController', function ($scope) {
     };
 
     $scope.saveInboundClick = function () {
-        $scope.Mode = "thanks";
+        $scope.Ticket.InWeight = $scope.CurrentWeight;
         AddTicket();
-        loadOpenTickets();
+        $scope.Mode = "thanks";
+        refresh();
     };
 
     $scope.saveOutboundClick = function () {
         UpdateTicket();
-        $scope.selectedOpenTicket = [];
-        $scope.OpenTickets = [];
-        $scope.Ticket = [];
-        loadOpenTickets();
         $scope.Mode = "thanks";
+        refresh();
     };
 
     $scope.LoadTicket = function () {
+        UpdateWeight();
         $scope.Ticket = $scope.selectedOpenTicket;
         $scope.Mode = "outbound";
     }
 
     $scope.thanksClick = function () {
-        $scope.Mode = "home";
+
     };
     
     $scope.GetGrossWeight = function(){
@@ -133,9 +133,23 @@ app.controller('DataController', function ($scope) {
 		function(result) 
 		{	
             $scope.OpenTickets = JSON.parse(result);
+            $scope.mode = "home"; 
 		},
 		function(msg) { alert(msg.getErrorMessage()); }
 		)
+    }
+    
+    function RemoveTicketFromList(){
+        for (var i =0; i < $scope.OpenTickets.length; i++)
+            var OpenTicketTruck = $scope.OpenTickets[i].Truck.toString();
+            var CurrentTicketTruck = $scope.Ticket.Truck.toString();
+         
+            alert(OpenTicketTruck + "-" + CurrentTicketTruck);
+            if (OpenTicketTruck == CurrentTicketTruck) 
+            {
+                $scope.OpenTickets.splice(i,1);
+                alert("Gotcha");
+            }
     }
             
     //ideally there would be a service call to handle this. 
@@ -145,6 +159,15 @@ app.controller('DataController', function ($scope) {
         Message = new RemObjects.SDK.JSONMessage();
         Database = new DatabaseService(Channel, Message);
         Scales = new ScaleService(Channel, Message);
+        
+       
+    Database.GetData("TruckIO.sdf", "SELECT * FROM [Ticket] WHERE [Completed] = 0",
+		function(result) 
+		{	
+            $scope.OpenTickets = JSON.parse(result);
+		},
+		function(msg) { alert(msg.getErrorMessage()); }
+		)
        
     Database.GetData("TruckIO.sdf", "SELECT * FROM [Commodity]",
 		function(result) 
@@ -176,12 +199,8 @@ app.controller('DataController', function ($scope) {
             $scope.Trucks = JSON.parse(result);
 		},
 		function(msg) { alert(msg.getErrorMessage()); }
-		);
-
-    loadOpenTickets();
-        
-    setInterval(UpdateWeight, 1000);
-        
+		);    
+         
     }
     
     function UpdateWeight()
@@ -268,7 +287,7 @@ app.controller('DataController', function ($scope) {
                   var response = result.toObject();
               }, 
               function(msg) { alert("Fail"); });
-
+            
         } catch (e) {
           alert(e);
         }  
@@ -405,6 +424,14 @@ app.controller('DataController', function ($scope) {
           }
           return _p8() + _p8(true) + _p8(true) + _p8();
       }
+    
+    function refresh() {
+
+        setTimeout(function () {
+            $scope.mode = "home";
+            this.location.reload()
+        }, 2000);
+}
 
 
 });
