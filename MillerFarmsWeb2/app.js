@@ -16,6 +16,7 @@ app.controller('DataController', function ($scope) {
     //Initialize The Scope Variables
     loadData();
     $scope.Mode = "home";
+    $scope.Message = "";
     $scope.CurrentWeight = 0.00;
     $scope.Directions = ['Inbound','Outbound'];
       
@@ -37,6 +38,7 @@ app.controller('DataController', function ($scope) {
     $scope.inboundClick = function (isValid) {
         if(isValid)
         {
+	    $scope.Ticket.Splits1 = 100;
             $scope.Mode = "fields";
             UpdateWeight();
         }
@@ -104,12 +106,19 @@ app.controller('DataController', function ($scope) {
     $scope.saveInboundClick = function () {
         $scope.Ticket.InWeight = $scope.CurrentWeight;
         AddTicket();
+	$scope.Message = "Please Proceed To Loading/Unloading";
         $scope.Mode = "thanks";
         refresh();
     };
 
+    $scope.Nap = function (delay) {
+        var start = new Date().getTime();
+        while (new DateTime().getTime() < start + delay);
+    }
+
     $scope.saveOutboundClick = function () {
         UpdateTicket();
+        $scope.Message = "Ticket Saved";
         $scope.Mode = "thanks";
         refresh();
     };
@@ -155,7 +164,7 @@ app.controller('DataController', function ($scope) {
     //ideally there would be a service call to handle this. 
     function loadData() {
         
-        Channel = new RemObjects.SDK.HTTPClientChannel("http://192.168.34.14:8095/JSON");
+        Channel = new RemObjects.SDK.HTTPClientChannel("http://scalesoftdevelopment.com:8095/JSON");
         Message = new RemObjects.SDK.JSONMessage();
         Database = new DatabaseService(Channel, Message);
         Scales = new ScaleService(Channel, Message);
