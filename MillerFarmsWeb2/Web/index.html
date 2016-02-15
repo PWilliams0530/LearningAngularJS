@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html ng-app="FarmApp">
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Brechbuhler Scales, Inc.</title>
+        <meta name="description" content="Miller Farms">
+        <link rel="stylesheet" href="Css/main.css"/> 
+        <link rel="stylesheet" href="Css/Bootstrap.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src=Scripts/RemObjectsSDK.js></script>
+        <script src="Scripts/ScaleLibrary_intf.js"></script>
+        <script src="Scripts/CommonLibrary_intf.js"></script>
+        <script src="Scripts/angular.min.js"></script>
+        <script src="Scripts/jquery-1.9.1.min.js"></script>
+        <script src="Scripts/bootstrap.min.js"></script>
+        <script src="app.js"></script>
+        <script src="Scripts/ui.js"></script>
+    </head>
+    <body ng-controller="DataController as Data" ng-init="init()">
+              
+        <div id="Home" ng-show= "Mode == 'home' || Mode == 'outbound'">          
+			<div class="form-group form-heading" >
+                <select ng-options="ticket.Truck for ticket in OpenTickets" ng-model="selectedOpenTicket" ng-focus="Nap(3000)" ng-change="LoadTicket()">
+                    <option value="" disabled>Select Open Ticket</option>
+                </select>
+            </div>
+            <div class="form-group full-width" >        
+                <input type="button" class="btn btn-primary full-width" value="New Ticket" name="NewTicket" ng-click="newTicketClick()">
+            </div>
+        </div>
+        
+        <div id="Outbound" ng-show="Mode == 'outbound'">
+        <form name="outboundForm" ng-submit="outboundClick(outboundForm.$valid)" novalidate>
+			<ul>
+			  <li><strong>Truck ID: </strong>{{Ticket.Truck}}</li>
+			  <li><strong>Commodity: </strong>{{Ticket.Commodity}}</li>
+			  <li><strong>Field: </strong>{{Ticket.Field}}</li>
+			  <li><strong>Farm: </strong>{{Ticket.Farm}}</li>
+			</ul>
+            <div class="form-group">
+                <label>Moisture:</label><input type="text" name="input" ng-model="Ticket.Moisture" required>
+            </div>
+            <div class="form-group">
+                <label>Test Weight:</label><input type="text" name="input" ng-model="Ticket.TestWeight" required>
+            </div>
+            <div class="form-group full-width">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <input type="button" class="btn btn-danger" value="Cancel" name="Cancel" ng-click="cancelClick()">
+            </div>       
+        </form>
+        </div>
+        
+        <div id="NewTicket" ng-show="Mode == 'inbound'">
+        <form name="inboundForm" ng-submit="inboundClick(inboundForm.$valid)" novalidate>
+            <div class="form-group">
+                <label>Truck: </label>
+                <select ng-options="item.Name for item in Trucks" ng-model="Ticket.Truck" required>
+                    <option value="" disabled>Select Truck</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Direction: </label>
+                <select ng-options="item as item for item in Directions" ng-model="Ticket.Direction" required>
+                    <option value="" disabled>Select Direction</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Commodity: </label>
+                <select ng-options="item.Name for item in Commodities" ng-model="Ticket.Commodity" required>
+                    <option value="" disabled>Select Commodity</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Farm: </label>
+                <select ng-options="item.Name for item in Farms" ng-model="Ticket.Farm" required>
+                    <option value="" disabled>Select Farm</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Moisture:</label><input type="text" name="input" ng-model="Ticket.Moisture">
+            </div>
+            <div class="form-group">
+                <label>Test Weight:</label><input type="text" name="input" ng-model="Ticket.TestWeight">
+            </div>
+            <div class="form-group full-width">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <input type="button" class="btn btn-danger" value="Cancel" name="Cancel" ng-click="cancelClick()">
+            </div>  
+        </form>
+        </div>
+        
+        <div id="SetFieldDistribution" ng-show="Mode == 'fields'">
+        <form name="FieldForm" ng-submit="fieldformClick(FieldForm.$valid)" novalidate>
+            <div class="form-group">
+                <label>Field 1:</label>
+                <select ng-options="item.Name for item in Fields| filter:Ticket.Farm.Name" ng-model="Ticket.Field1" required>
+                    <option value="" disabled>Select Field</option>
+                </select>
+                <label>Splits: </label><input type="text" value="100" name="input" ng-model="Ticket.Splits1" required>
+            </div>
+            <div class="form-group">
+                <label>Field 2:</label>
+                <select ng-options="item.Name for item in Fields| filter:Ticket.Farm.Name" ng-model="Ticket.Field2">
+                    <option value="" disabled>Select Field</option>
+                </select>
+                <label>Splits:</label><input type="text" name="input" ng-model="Ticket.Splits2">
+            </div>
+            <div class="form-group">
+                <label>Field 3: </label>
+                <select ng-options="item.Name for item in Fields| filter:Ticket.Farm.Name" ng-model="Ticket.Field3">
+                    <option value="" disabled>Select Field</option>
+                </select>
+                <label>Splits:</label><input type="text" name="input" ng-model="Ticket.Splits3">
+            </div>
+            <div class="form-group full-width">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <input type="button" class="btn btn-danger" value="Cancel" name="Cancel" ng-click="cancelClick()">
+            </div>  
+        </form>
+        </div>
+                
+                
+        <div id="ConfirmInbound" class="confirm" ng-show="Mode == 'confirminbound'">
+             <p><h1>Confirmation</h1></p>
+			<ul>
+			  <li><strong>Truck ID: </strong>{{Ticket.Truck.Name}}</li>
+			  <li><strong>Commodity: </strong>{{Ticket.Commodity.Name}}</li>
+                          <li><strong>Farm: </strong>{{Ticket.Farm.Name}}</li>
+			  <li><strong>Field: </strong>{{Ticket.Field}}</li>
+                          <li><strong>Splits: </strong>{{Ticket.Splits}}</li>
+			  <li><strong>In Weight: </strong>{{CurrentWeight}} lbs</li>
+			</ul>
+            <div class="form-group full-width">
+                <input type="button" class="btn btn-primary" value="Save" name="SaveInbound" ng-click= "saveInboundClick()">
+                <input type="button" class="btn btn-danger" value="Cancel" name="Cancel" ng-click="cancelClick()">
+            </div>                     
+        </div>
+                
+        <div id="ConfirmOutbound" class="confirm" ng-show="Mode == 'confirmoutbound'">
+             <p><h1>Confirmation</h1></p>
+            <ul>
+				<li><strong>Truck ID: </strong>{{Ticket.Truck}}</li>
+				<li><strong>Commodity: </strong>{{Ticket.Commodity}}</li>
+				<li><strong>Field: </strong>{{Ticket.Field}}</li>
+				<li><strong>Farm: </strong>{{Ticket.Farm}}</li>
+                                <li><strong>Splits: </strong>{{Ticket.Splits}}</li>
+				<li><strong>Moisture: </strong>{{Ticket.Moisture}}</li>
+				<li><strong>Test Weight: </strong>{{Ticket.TestWeight}}</li>
+				<li><strong>Gross: </strong>{{Ticket.Gross}} lbs</li>
+				<li><strong>Tare: </strong>{{Ticket.Tare}} lbs</li>
+				<li><strong>Net: </strong>{{Ticket.Net}} lbs</li>
+			</ul>
+            <div class="form-group full-width">
+                <input type="button" class="btn btn-primary" value="Save" name="SaveOutbound" ng-click= "saveOutboundClick()">
+                <input type="button" class="btn btn-danger" value="Cancel" name="Cancel" ng-click="cancelClick()">
+            </div>
+        </div>     
+      
+        <div id="ThankPage" ng-show="Mode == 'thanks'">
+            <h3>{{Message}}</h3>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,27 @@
+
+Miller Farms
+
+TruckID: {VAR("Truck")}
+Ticket #: {VAR("TicketNumber")}
+
+Date: {VAR("OutDate", "MM/dd/yyyy")}
+Time: {VAR("OutDate", "hh:mm tt")}
+
+Direction: {VAR("Direction")}
+Farm: {VAR("Farm")}
+Field: {VAR("Field")}
+Splits: {VAR("Splits")}
+Commodity: {VAR("Commodity")}
+
+Gross Weight: {VAR("Gross")} lbs
+ Tare Weight: {VAR("Tare")} lbs
+  Net Weight: {VAR("Net")} lbs
+
+Moisture: {VAR("Moisture")}
+Test Weight: {VAR("TestWeight")}
+
+
+
+
+
+
